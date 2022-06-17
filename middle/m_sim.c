@@ -21,7 +21,7 @@ void process_data(void)
 		uint32_t data_len = gsm_get_new_data(data_received);
 		sq_push(&queue_data, data_received);
 		gsm_clear_uart_buffer();
-		logUART(data_received, data_len);
+		log_com3_ln(data_received, data_len);
 	}
 
 	if(!sq_is_empty(&queue_data)){

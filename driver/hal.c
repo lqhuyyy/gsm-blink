@@ -15,10 +15,24 @@ static void enable_clk(void)
 
 void hal_init(void)
 {
+	// clock
 	enable_clk();
+
+	// systick
 	systick_init();
+
+	// log
+	log_init();
+
+	// gsm power
 	gsm_power_pin_init();
+
+	// gsm uart
 	gsm_uart_init();
+
+	// led
 	led_init();
+
+
 //	button_init();
 }

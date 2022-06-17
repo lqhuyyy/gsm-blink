@@ -25,14 +25,14 @@ void USART1_IRQHandler(void) {
 
 void gsm_uart_init(void) {
 	// Lien ket PA9 PA10 voi TX, RX cua UART1
-	GPIO_PinAFConfig(GSM_UART_GPIO_PORT, GSM_UART_TX_PinSource, GPIO_AF_USART1);
-	GPIO_PinAFConfig(GSM_UART_GPIO_PORT, GSM_UART_RX_PinSource, GPIO_AF_USART1);
+	GPIO_PinAFConfig(GSM_GPIO_PORT, GSM_UART_TX_PinSource, GPIO_AF_USART1);
+	GPIO_PinAFConfig(GSM_GPIO_PORT, GSM_UART_RX_PinSource, GPIO_AF_USART1);
 
 	GPIO_InitTypeDef GPIO_InitStruct;
 	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_AF;
 	GPIO_InitStruct.GPIO_Pin = GSM_UART_TX_PIN | GSM_UART_RX_PIN;
 	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_Init(GSM_UART_GPIO_PORT, &GPIO_InitStruct);
+	GPIO_Init(GSM_GPIO_PORT, &GPIO_InitStruct);
 
 	USART_InitTypeDef USART_InitStruct;
 	USART_InitStruct.USART_BaudRate = 115200;
@@ -63,15 +63,30 @@ void gsm_power_pin_init(void)
 	// PWRKEY
 	GPIO_InitTypeDef GPIO_InitStruct8;
 	GPIO_InitStruct8.GPIO_Mode = GPIO_Mode_OUT;
-	GPIO_InitStruct8.GPIO_Pin = GPIO_Pin_8;
-	GPIO_Init(GSM_UART_GPIO_PORT, &GPIO_InitStruct8);
+	GPIO_InitStruct8.GPIO_Pin = GSM_PWR_PIN;
+	GPIO_Init(GSM_GPIO_PORT, &GPIO_InitStruct8);
 
 	// STATUS
 	GPIO_InitTypeDef GPIO_InitStruct12;
 	GPIO_InitStruct12.GPIO_Mode = GPIO_Mode_IN;
-	GPIO_InitStruct12.GPIO_Pin = GPIO_Pin_12;
-	GPIO_InitStruct12.GPIO_PuPd = GPIO_PuPd_UP;
-	GPIO_Init(GSM_UART_GPIO_PORT, &GPIO_InitStruct12);
+	GPIO_InitStruct12.GPIO_Pin = GSM_STATUS_PIN;
+	GPIO_InitStruct12.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	GPIO_Init(GSM_GPIO_PORT, &GPIO_InitStruct12);
+}
+
+uint8_t gsm_get_status(void)
+{
+	return GPIO_ReadInputDataBit(GSM_GPIO_PORT, GSM_STATUS_PIN);
+}
+
+void gsm_pull_down_pwr(void)
+{
+	GPIO_SetBits(GSM_GPIO_PORT, GSM_PWR_PIN);
+}
+
+void gsm_pull_up_pwr(void)
+{
+	GPIO_ResetBits(GSM_GPIO_PORT, GSM_PWR_PIN);
 }
 
 void gsm_send_byte(uint8_t data) {

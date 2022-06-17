@@ -2,6 +2,7 @@
 #define HARDWARE_H_
 
 #include "stm32f4xx_gpio.h"
+#include <stdint.h>
 
 /* LED */
 #define LED_PIN			GPIO_Pin_4
@@ -10,11 +11,14 @@
 
 /* GSM */
 #define GSM_USART					USART1
-#define GSM_UART_GPIO_PORT			GPIOA
+#define GSM_GPIO_PORT				GPIOA
 #define GSM_UART_TX_PIN 			GPIO_Pin_9
 #define GSM_UART_RX_PIN 			GPIO_Pin_10
 #define GSM_UART_TX_PinSource		GPIO_PinSource9
 #define GSM_UART_RX_PinSource		GPIO_PinSource10
+
+#define GSM_PWR_PIN 				GPIO_Pin_8
+#define GSM_STATUS_PIN				GPIO_Pin_12
 /* */
 
 /* LOG */
