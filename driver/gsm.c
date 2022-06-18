@@ -94,7 +94,8 @@ void gsm_send_byte(uint8_t data) {
 	while (USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET);
 }
 
-void gsm_send_str(char* cmd) {
+void gsm_send_str(char* cmd)
+{
 
 	uint32_t size = strlen(cmd);
 

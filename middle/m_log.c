@@ -12,3 +12,4 @@ void log_com3(char* str, uint32_t size)
 {
 	logUART(str, size);
 }
+

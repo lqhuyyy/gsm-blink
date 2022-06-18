@@ -2,6 +2,6 @@
 #define _M_HAL_INIT_H_
 
 
-void init_app(void);
+void m_hal_init(void);
 
 #endif

@@ -33,6 +33,6 @@ void hal_init(void)
 	// led
 	led_init();
 
-
-//	button_init();
+	// button
+	_button_init();
 }

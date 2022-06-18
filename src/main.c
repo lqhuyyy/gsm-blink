@@ -1,36 +1,21 @@
-#include <m_hal_init.h>
 #include "string.h"
 
-#include "m_log.h"
+#include "m_hal_init.h"
 #include "m_sim.h"
-#include "other.h"
+#include "m_button.h"
+#include "m_log.h"
+
 
 int main(void) {
-	static uint8_t check_at = 0;
-	static state_machine = GSM_POWER_ON;
-	static uint8_t is_check_at = 0;
+	m_hal_init();
 
-	hal_init();
-
-	log_com3("test uart\n", strlen("test uart\n"));
+	log_com3_ln("test log", strlen("test log"));
 
 	while (1) {
-		process_data();
-		blink_led();
+		process_data_receive();
+//		blink_led();
+		gsm_loop();
+		handle_button_loop();
 
-		switch (state_machine) {
-		case GSM_POWER_ON:
-			if (power_on() == 1) {
-				state_machine = GSM_SEND_CMD;
-			}
-			break;
-
-		case GSM_SEND_CMD:
-			if(!is_check_at){
-				is_check_at = 1;
-				sendCmdSim("AT+CICCID=?\r");
-			}
-			break;
-		}
 	}
 }
